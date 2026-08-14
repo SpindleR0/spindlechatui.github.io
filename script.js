@@ -34,6 +34,44 @@ let themeSettings = JSON.parse(localStorage.getItem("themeSettings")) || {
   sendIcon: ""
 };
 
+
+// IMAGE CROPPER 
+
+let cropper = null;
+
+function openCropper(file, callback) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const img = document.getElementById("cropper-image");
+    img.src = reader.result;
+
+    document.getElementById("cropper-modal").style.display = "block";
+
+    cropper = new Cropper(img, {
+      aspectRatio: NaN,
+      viewMode: 1
+    });
+
+    document.getElementById("cropper-confirm").onclick = () => {
+      const canvas = cropper.getCroppedCanvas();
+      const croppedDataURL = canvas.toDataURL("image/png");
+      cropper.destroy();
+      cropper = null;
+      document.getElementById("cropper-modal").style.display = "none";
+      callback(croppedDataURL);
+    };
+
+    document.getElementById("cropper-cancel").onclick = () => {
+      cropper.destroy();
+      cropper = null;
+      document.getElementById("cropper-modal").style.display = "none";
+    };
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
 // ---------------------------
 // SAVE HELPERS
 // ---------------------------
@@ -56,6 +94,8 @@ function refreshCharacterList() {
 
   characters.forEach(char => {
     const item = document.createElement("div");
+	if (char.flip === undefined) char.flip = false;
+
     item.className = "character-item " +
       (char.side === "left" ? "left-side" : "right-side");
 
@@ -153,20 +193,19 @@ document.getElementById("add-character").onclick = () => {
     return;
   }
 
-  const reader = new FileReader();
-  reader.onload = () => {
-    characters.push({
-      name,
-      side,
-      avatar: reader.result
-    });
+openCropper(avatarFile, (cropped) => {
+  characters.push({
+    name,
+    side,
+    avatar: cropped
+  });
 
-    saveCharacters();
-    refreshCharacterList();
+  saveCharacters();
+  refreshCharacterList();
 
-    document.getElementById("new-char-name").value = "";
-    document.getElementById("new-char-avatar").value = "";
-  };
+  document.getElementById("new-char-name").value = "";
+  document.getElementById("new-char-avatar").value = "";
+});
 
   reader.readAsDataURL(avatarFile);
 };
@@ -200,7 +239,8 @@ function sendMessage() {
   msg.className = `message ${char.side}`;
 
   msg.innerHTML = `
-    <img src="${char.avatar}" class="avatar">
+	<img src="${char.avatar}" class="avatar ${char.flip ? "flip" : ""}">
+
     <div>
       <div class="name-label ${showNames ? "" : "hide-name"}">${char.name}</div>
       <div class="bubble">${text}</div>
@@ -241,24 +281,23 @@ document.getElementById("image-input").onchange = () => {
   const file = document.getElementById("image-input").files[0];
   if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = () => {
+  openCropper(file, (cropped) => {
     const char = characters.find(c => c.name === selectedCharacter);
 
     const msg = document.createElement("div");
     msg.className = `message ${char.side}`;
 
     msg.innerHTML = `
-      <img src="${char.avatar}" class="avatar">
+<img src="${char.avatar}" class="avatar ${char.flip ? "flip" : ""}">
+
       <div>
         <div class="name-label ${showNames ? "" : "hide-name"}">${char.name}</div>
         <div class="bubble">
-          <img src="${reader.result}" class="sent-image">
+          <img src="${cropped}" class="sent-image">
         </div>
       </div>
     `;
 
-    // guess ill do it this way, ill fix it later maybe add more options?
     msg.addEventListener("contextmenu", e => {
       e.preventDefault();
       if (confirm("Delete this message?")) msg.remove();
@@ -266,10 +305,9 @@ document.getElementById("image-input").onchange = () => {
 
     document.getElementById("chat-window").appendChild(msg);
     updateScrollIndicator();
-  };
-
-  reader.readAsDataURL(file);
+  });
 };
+
 
 
 // SCROLL INDICATOR (NOT NEEEDED MAYBE? I DONT KNOW)
@@ -797,6 +835,21 @@ avatarHideFrameInput.addEventListener("change", () => {
   localStorage.setItem("themeSettings", JSON.stringify(themeSettings));
   applyTheme();
 });
+
+// AVATAR TOGGLE FLIP
+document.getElementById("toggle-flip-avatar").addEventListener("change", () => {
+  const flip = document.getElementById("toggle-flip-avatar").checked;
+  const selected = selectedCharacter;
+  if (!selected) return;
+
+  const char = characters.find(c => c.name === selected);
+  char.flip = flip;
+
+  saveCharacters();
+  refreshCharacterList();
+  updateHeader();
+});
+
 
 
 // EXPORT CHAT
