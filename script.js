@@ -501,6 +501,35 @@ themeSelect.addEventListener("change", () => {
 	  };
 	}
 
+		if (theme === "lyn") {
+	  themeSettings = {
+		...themeSettings,
+		theme,
+		primary: "#fecdcd",
+		secondary: "#c2dfff",
+		bubbleLeft: "#9acafe",
+		bubbleRight: "#fee1e1",
+		header: "#ff8ab9",
+		text: "#000614",
+		inputbar: "#ff8ab9",
+		send: "#ffffff",
+		plus: "#ffffff",
+		textBorder: "2px dotted black",
+		backgroundImage: "url('images/lyn_heart.png')",
+		bgScale: 0.1,
+		bgOpacity: 0.15,
+		animateBackground: true,
+
+		headerBackgroundImage: "url('images/lyn_header.png')",
+		headerOpacity: 0.1,
+		avatarBorder: "#ffffff",
+
+		font: "'MedievalSharp', cursive",
+		fontData: null, 
+		sendIcon: "images/lyn_arrow.png"
+	  };
+	}
+
   if (theme === "fantasy") {
     themeSettings = {
       ...themeSettings,
