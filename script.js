@@ -372,6 +372,96 @@ applyTheme();
 
 themeSelect.addEventListener("change", () => {
   const theme = themeSelect.value;
+  
+	if (theme === "ottilie") {
+	  themeSettings = {
+		...themeSettings,
+		theme,
+		primary: "#bfc9ac",
+		secondary: "#ffefc2",
+		bubbleLeft: "#e7fdbf",
+		bubbleRight: "#fffff5",
+		header: "#9ec25b",
+		text: "#171622",
+		inputbar: "#82be65",
+		send: "#fffff5",
+		plus: "#fffff5",
+		textBorder: "2px dashed yellowgreen",
+
+		backgroundImage: "url('images/ottilie_symbol.png')",
+		bgScale: 0.2,
+		bgOpacity: 0.15,
+		animateBackground: true,
+
+		headerBackgroundImage: "url('images/wicker.png')",
+		headerOpacity: 0.1,
+
+		avatarBorder: "#c7fe62",
+
+		font: "'Fira Code', monospace",
+
+		// Custom font 
+		fontData: null,
+
+		sendIcon: "images/green_luck_arrow.png"
+	  };
+	}
+  
+	if (theme === "asimov") {
+	  themeSettings = {
+		...themeSettings,
+		theme,
+		primary: "#242838",
+		secondary: "#303554",
+		bubbleLeft: "#324076",
+		bubbleRight: "#1d1d3a",
+		header: "#4565b0",
+		text: "#eae9f1",
+		inputbar: "#647fbe",
+		send: "#ece6df",
+		plus: "#050505",
+		textBorder: "1px solid gold",
+		backgroundImage: "url('images/asimov_symbol.png')",
+		bgScale: 0.2,
+		bgOpacity: 0.15,
+		animateBackground: true,
+		headerBackgroundImage: "url('images/asimov_header2.png')",
+		headerOpacity: 0.1,
+		avatarBorder: "#e6cb60",
+		font: "'Fira Code', monospace",
+		fontData: null, 
+		sendIcon: "images/asimov_arrow.png"
+	  };
+	}
+	
+		if (theme === "felt") {
+	  themeSettings = {
+		...themeSettings,
+		theme,
+		primary: "#fecdd7",
+		secondary: "#ffc2c2",
+		bubbleLeft: "#fe9fb2",
+		bubbleRight: "#fee1e1",
+		header: "#df6d8f",
+		text: "#000614",
+		inputbar: "#df6d8f",
+		send: "#ffffff",
+		plus: "#ffffff",
+		textBorder: "1px solid #fff",
+		backgroundImage: "url('images/felt_background.png')",
+		bgScale: 0.1,
+		bgOpacity: 1,
+		animateBackground: true,
+
+		headerBackgroundImage: "url('images/white_floral.png')",
+		headerOpacity: 0.1,
+		avatarBorder: "#e6cb60",
+
+		font: "'MedievalSharp', cursive",
+		fontData: null, 
+		sendIcon: "images/arrowpin.png"
+	  };
+	}
 
   if (theme === "fantasy") {
     themeSettings = {
@@ -392,7 +482,8 @@ themeSelect.addEventListener("change", () => {
       animateBackground: false,
       headerBackgroundImage: "none",
       avatarBorder: "none",
-      font: "'Cinzel', serif"
+      font: "'Cinzel', serif",
+	  sendIcon: "images/black_arrow.png"
     };
   }
 
@@ -415,7 +506,8 @@ themeSelect.addEventListener("change", () => {
       animateBackground: false,
       headerBackgroundImage: "none",
       avatarBorder: "none",
-      font: "'Cairo', sans-serif"
+      font: "'Cairo', sans-serif",
+	  sendIcon: "images/black_arrow.png"
     };
   }
 
@@ -438,7 +530,8 @@ themeSelect.addEventListener("change", () => {
       animateBackground: false,
       headerBackgroundImage: "none",
       avatarBorder: "none",
-      font: "Arial, sans-serif"
+      font: "Arial, sans-serif",
+	  sendIcon: "images/black_arrow.png"
     };
   }
 
