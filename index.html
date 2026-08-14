@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Composer</title>
+
+  <!-- THEME FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="layout">
+
+  <!-- LEFT COLUMN -->
+  <div id="left-column">
+    <h2>Display Options</h2>
+
+    <label>
+      <input type="checkbox" id="toggle-names">
+      Show Names
+    </label>
+
+    <label>
+      <input type="checkbox" id="toggle-header">
+      Show Header
+    </label>
+
+    <label>
+      <input type="checkbox" id="toggle-avatar-frame">
+      Show Avatar Borders
+    </label>
+
+
+    <button id="export-chat">Export Screenshot</button>
+
+
+
+    <!-- THEME SECTION -->
+    <h2>Theme</h2>
+
+    <select id="theme-select">
+      <option value="default">Default</option>
+      <option value="fantasy">Fantasy</option>
+      <option value="scifi">Sci-Fi</option>
+    </select>
+
+    <h3>Saved Themes</h3>
+    <input id="theme-save-name" placeholder="Theme name">
+    <button id="theme-save-btn">Save Theme</button>
+
+    <select id="theme-load-select">
+      <option value="">Load Theme...</option>
+    </select>
+
+    <button id="theme-delete-btn">Delete Selected Theme</button>
+	
+	
+
+    <div id="theme-customizer">
+      <h3>Customize Theme</h3>
+
+      <!-- LEFT COLUMN: Colors -->
+      <div class="theme-column">
+        <h4>Colors</h4>
+
+        <div class="theme-row">
+          <label>Primary Color:</label>
+          <input type="color" id="theme-primary">
+        </div>
+
+        <div class="theme-row">
+          <label>Secondary Color:</label>
+          <input type="color" id="theme-secondary">
+        </div>
+
+        <div class="theme-row">
+          <label>Left Bubble Color:</label>
+          <input type="color" id="theme-bubble-left">
+        </div>
+
+        <div class="theme-row">
+          <label>Right Bubble Color:</label>
+          <input type="color" id="theme-bubble-right">
+        </div>
+
+        <div class="theme-row">
+          <label>Header Color:</label>
+          <input type="color" id="theme-header">
+        </div>
+
+        <div class="theme-row">
+          <label>Text Color:</label>
+          <input type="color" id="theme-text">
+        </div>
+
+        <div class="theme-row">
+          <label>Input Bar Color:</label>
+          <input type="color" id="theme-inputbar">
+        </div>
+
+        <div class="theme-row">
+          <label>Send Button Color:</label>
+          <input type="color" id="theme-send">
+        </div>
+
+        <div class="theme-row">
+          <label>(+) Button Color:</label>
+          <input type="color" id="theme-plus">
+        </div>
+
+        <div class="theme-row">
+          <label>Text Border:</label>
+          <input type="text" id="theme-text-border" placeholder="e.g. 2px solid #fff">
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Images & Extras -->
+      <div class="theme-column">
+        <h4>Images & Extras</h4>
+
+        <div class="theme-row">
+          <label>Background Image:</label>
+          <input type="file" id="theme-bg" accept="image/*">
+        </div>
+
+        <div class="theme-row">
+          <label>Background Scale:</label>
+          <input type="range" id="theme-bg-scale" min="0.1" max="6" step="0.1">
+        </div>
+
+		<div class="theme-row">
+		  <label>Background Image Transparency:</label>
+		  <input type="range" id="theme-bg-opacity" min="0" max="1" step="0.05">
+		</div>
+
+        <div class="theme-row">
+          <label>
+            <input type="checkbox" id="theme-bg-animate">
+            Animated Background
+          </label>
+        </div>
+
+        <div class="theme-row">
+          <label>Header Background:</label>
+          <input type="file" id="theme-header-bg" accept="image/*">
+        </div>
+
+		<div class="theme-row">
+		  <label>Header Image Transparency:</label>
+		  <input type="range" id="theme-header-opacity" min="0" max="1" step="0.05">
+		</div>
+
+
+        <div class="theme-row">
+          <label>Avatar Border:</label>
+          <input type="color" id="theme-avatar-border">
+        </div>
+
+        <div class="theme-row">
+          <label>Font:</label>
+          <select id="theme-font">
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="'Cairo', sans-serif">Cairo</option>
+            <option value="'Cinzel', serif">Cinzel</option>
+            <option value="'Courier New', monospace">Courier</option>
+          </select>
+        </div>
+		
+						  <div class="theme-row">
+		  <label>Custom Font (TTF/OTF):</label>
+		  <input type="file" id="theme-font-custom" accept=".ttf,.otf">
+		</div>
+
+        <div class="theme-row">
+          <label>Send Icon:</label>
+          <input type="file" id="theme-send-icon" accept="image/*">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER COLUMN -->
+  <div id="center-column">
+
+    <div id="chat-phone">
+
+      <div id="chat-header">
+        <img id="header-avatar" class="header-avatar">
+        <span id="header-name"></span>
+      </div>
+
+      <div id="chat-window"></div>
+
+      <div id="scroll-indicator"></div>
+
+      <div id="input-bar">
+        <button id="image-button">+</button>
+        <input type="file" id="image-input" accept="image/*" style="display:none;">
+
+        <input id="message-input" placeholder="Type a message...">
+
+        <button id="add-message">
+          <img id="send-icon" src="">
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div id="right-column">
+
+    <h2>Characters</h2>
+    <div id="character-list"></div>
+
+    <h2>Character Manager</h2>
+
+    <label>Name:</label>
+    <input id="new-char-name" placeholder="Character name">
+
+    <label>Side:</label>
+    <select id="new-char-side">
+      <option value="left">Left</option>
+      <option value="right">Right</option>
+    </select>
+
+    <label>Avatar:</label>
+    <input type="file" id="new-char-avatar" accept="image/*">
+
+    <button id="add-character">Add Character</button>
+    <button id="remove-character">Remove Selected</button>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
